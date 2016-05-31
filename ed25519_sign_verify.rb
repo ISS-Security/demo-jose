@@ -4,8 +4,8 @@ require 'jose'
 new_app_secret = JOSE::JWK.generate_key([:okp, :Ed25519])
 new_app_public = new_app_secret.to_public
 
-saved_secret_key = Base64.encode64(new_app_secret.to_okp[1]) # saved by App
-saved_public_key = Base64.encode64(new_app_public.to_okp[1]) # sent to API
+saved_secret_key = Base64.strict_encode64(new_app_secret.to_okp[1]) # saved by App
+saved_public_key = Base64.strict_encode64(new_app_public.to_okp[1]) # sent to API
 
 # 1. App uses secret key to sign message for API
 app_secret_key = JOSE::JWK.from_okp([:Ed25519, Base64.decode64(saved_secret_key)])
